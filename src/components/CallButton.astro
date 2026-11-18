@@ -1,0 +1,12 @@
+---
+// Pill call button (concept §5 «Ключові компоненти»): handset + verb (+ number). Solid = the one fill per screen.
+import PhoneIcon from "./PhoneIcon.astro";
+import { PHONE_MAIN } from "../data/clinic";
+interface Props { label: string; showNumber?: boolean; variant?: "solid" | "outline"; class?: string; rec?: string; }
+const { label, showNumber = false, variant = "solid", class: cls, rec } = Astro.props;
+---
+<a class:list={["btn", `btn--${variant}`, cls]} href={PHONE_MAIN.href} data-rec={rec}>
+  <PhoneIcon />
+  <span class="btn__label">{label}</span>
+  {showNumber && <span class="btn__number tnum">{PHONE_MAIN.display}</span>}
+</a>

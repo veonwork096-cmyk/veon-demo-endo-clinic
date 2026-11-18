@@ -1,0 +1,39 @@
+---
+// One-line sticky header (W-UX-R005, W-UX-R002): logo → #top, 6 anchors, number, outline «Записатися».
+// Mobile (< 960px): 60px bar with logo, call icon and the menu button; the menu repeats both numbers and hours.
+import { Image } from "astro:assets";
+import logo from "../assets/img/logo-large.png";
+import PhoneIcon from "./PhoneIcon.astro";
+import { NAV, PHONE_MAIN, PHONE_SECOND, HOURS_LINE } from "../data/clinic";
+// On the homepage the links are anchors; elsewhere (404) they lead to the homepage sections.
+interface Props { home?: string; }
+const { home = "" } = Astro.props;
+---
+<header class="site-header" data-rec="W-UX-R002,W-UX-R005">
+  <div class="shell site-header__in">
+    <a class="brand" href={home ? home : "#top"}>
+      <Image src={logo} alt="Endo Clinic, Закарпатська Ендоклініка: на початок сторінки" widths={[72, 144]} sizes="72px" width={72} height={58} loading="eager" class="brand__logo" />
+    </a>
+    <nav class="nav" id="site-nav" aria-label="Розділи сторінки">
+      <ul class="nav__list">
+        {NAV.map((item) => (
+          <li><a class="nav__link" href={home + item.href} data-nav={item.href.slice(1)}>{item.label}</a></li>
+        ))}
+      </ul>
+      <div class="nav__extra">
+        <a class="nav__phone tnum" href={PHONE_MAIN.href}>{PHONE_MAIN.display}</a>
+        <a class="nav__phone nav__phone--second tnum" href={PHONE_SECOND.href}>{PHONE_SECOND.display}</a>
+        <p class="nav__hours">{HOURS_LINE}</p>
+      </div>
+    </nav>
+    <div class="site-header__actions">
+      <a class="header-phone tnum" href={PHONE_MAIN.href}>{PHONE_MAIN.display}</a>
+      <a class="btn btn--outline btn--small header-book" href={PHONE_MAIN.href}>Записатися</a>
+      <a class="icon-call" href={PHONE_MAIN.href} aria-label={`Зателефонувати: ${PHONE_MAIN.display}`}><PhoneIcon size={22} /></a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="burger__bars" aria-hidden="true"><span></span></span>
+        <span class="visually-hidden">Меню</span>
+      </button>
+    </div>
+  </div>
+</header>

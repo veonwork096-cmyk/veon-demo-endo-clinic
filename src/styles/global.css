@@ -1,0 +1,122 @@
+/* Technical base (demo-base) + Endo Clinic typography and shared pieces. Colours and fonts only via tokens.css. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+img, video, svg { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); font-weight: 600; letter-spacing: var(--track-display); line-height: var(--lh-head); overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
+p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+p { text-wrap: pretty; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--color-text); outline-offset: 2px; transition: none; }
+::selection { background: var(--color-text); color: var(--color-surface); }
+html { scrollbar-color: var(--color-line) var(--color-bg); }
+.skip-link { position: absolute; left: var(--space-4); top: -100px; z-index: 100; padding: var(--space-3) var(--space-4); background: var(--color-text); color: var(--color-surface); border-radius: var(--radius); }
+.skip-link:focus { top: var(--space-4); }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+[id] { scroll-margin-top: var(--header-h, 0px); }
+.tnum { font-variant-numeric: tabular-nums; }
+.nowrap { white-space: nowrap; }
+
+/* Shell: the 12-column container. The axis lives in its left field. */
+.shell {
+  position: relative;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+.shell--axis::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--axis-x);
+  width: 1px;
+  background: var(--color-hairline);
+  pointer-events: none;
+}
+
+/* Axis node: a ring on the axis next to each section head. The red dot sits in the current one. */
+.axis-node {
+  position: absolute;
+  left: calc(var(--axis-x) - var(--pad) - var(--node) / 2);
+  top: 0.45em;
+  width: var(--node);
+  height: var(--node);
+  border-radius: 50%;
+  border: 2px solid var(--color-hairline);
+  background: var(--color-bg);
+  pointer-events: none;
+}
+.axis-node::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: var(--color-seal);
+  transform: scale(0);
+  transition: transform var(--dur-axis) var(--ease-out);
+}
+.axis-node.is-current::after { transform: scale(1); }
+
+/* Section heads open from the axis (no eyebrows). */
+.sec-head { position: relative; max-width: 52rem; }
+.sec-head h2 { font-size: var(--fs-h2); line-height: var(--lh-head); }
+.sec-head p { margin-top: var(--space-4); font-size: var(--fs-lead); color: var(--color-muted); max-width: 46ch; }
+
+/* Reveal hook (src/scripts/reveal.ts): only the remote rings use it. Hidden only once scripting runs. */
+[data-reveal] { transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out); transition-delay: var(--reveal-delay, 0ms); }
+
+/* FutureLink: inactive item for a page that is not built yet. */
+.future-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: default;
+  color: var(--color-muted);
+  text-decoration: underline dashed 1px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: var(--color-line);
+}
+.future-link__note[aria-hidden="true"] {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% - var(--space-1));
+  transform: translateY(4px);
+  width: max-content;
+  max-width: min(16rem, 80vw);
+  white-space: normal;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--fs-meta);
+  line-height: 1.2;
+  background: var(--color-text);
+  color: var(--color-surface);
+  border-radius: var(--radius);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
+  z-index: 20;
+  text-decoration: none;
+}
+.future-link[aria-disabled="true"] { cursor: not-allowed; }
+.future-link:hover { color: var(--color-text); }
+.future-link:active .future-link__note { opacity: 1; transform: translateY(0); }
+.future-link:hover .future-link__note, .future-link:focus .future-link__note { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0ms !important; }
+}

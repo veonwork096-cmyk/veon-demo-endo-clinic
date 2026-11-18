@@ -1,0 +1,39 @@
+---
+// Light footer (concept §5): logo → #top, phones, hours, address, e-mail, socials, future pages.
+import { Image } from "astro:assets";
+import logo from "../assets/img/logo-large.png";
+import FutureLink from "./FutureLink.astro";
+import { PHONE_MAIN, PHONE_SECOND, HOURS_LINE, ADDRESS, MAP_URL, EMAIL, INSTAGRAM, FACEBOOK } from "../data/clinic";
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="shell site-footer__in">
+    <a class="site-footer__brand" href="#top">
+      <Image src={logo} alt="Endo Clinic, Закарпатська Ендоклініка: на початок сторінки" widths={[112, 224]} sizes="112px" width={112} height={90} loading="lazy" />
+    </a>
+    <div class="site-footer__col">
+      <p class="site-footer__title">Запис</p>
+      <a class="site-footer__phone tnum" href={PHONE_MAIN.href}>{PHONE_MAIN.display}</a>
+      <a class="site-footer__phone tnum" href={PHONE_SECOND.href}>{PHONE_SECOND.display}</a>
+      <p class="site-footer__muted">{HOURS_LINE}</p>
+    </div>
+    <div class="site-footer__col">
+      <p class="site-footer__title">Адреса</p>
+      <a href={MAP_URL} target="_blank" rel="noopener">{ADDRESS}</a>
+      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      <span class="site-footer__social">
+        <a href={INSTAGRAM} target="_blank" rel="noopener">Instagram</a>
+        <a href={FACEBOOK} target="_blank" rel="noopener">Facebook</a>
+      </span>
+    </div>
+    <ul class="site-footer__col site-footer__future" aria-label="Розділи сайту">
+      <li><FutureLink>Про нас</FutureLink></li>
+      <li><FutureLink>Ціни</FutureLink></li>
+      <li><FutureLink>Новини</FutureLink></li>
+      <li><FutureLink>Онлайн-оплата</FutureLink></li>
+      <li><FutureLink>Політика конфіденційності</FutureLink></li>
+    </ul>
+    <p class="site-footer__note">Частина коштів клініки спрямовується на допомогу військовим.</p>
+    <p class="site-footer__note site-footer__copy">© {year} Endo Clinic, Закарпатська Ендоклініка</p>
+  </div>
+</footer>

@@ -1,0 +1,31 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import CallButton from "../components/CallButton.astro";
+import "../styles/home.css";
+const home = import.meta.env.BASE_URL;
+---
+<Base lang="uk" title="Сторінку не знайдено — Endo Clinic" description="Такої сторінки немає. Поверніться на головну Endo Clinic або зателефонуйте в реєстратуру.">
+  <Header slot="header" home={home} />
+  <section class="not-found" aria-labelledby="nf-title">
+    <div class="shell shell--axis not-found__in">
+      <h1 id="nf-title">Такої сторінки немає</h1>
+      <p>Можливо, адресу змінено. Почніть з головної або зателефонуйте в реєстратуру.</p>
+      <div class="not-found__actions">
+        <CallButton label="Зателефонувати" showNumber />
+        <a class="text-link" href={home}>На головну</a>
+      </div>
+    </div>
+  </section>
+  <Footer slot="footer" />
+</Base>
+<style>
+  .not-found__in { padding-block: var(--space-8); display: grid; gap: var(--space-5); justify-items: start; }
+  .not-found h1 { font-size: var(--fs-h2); text-wrap: balance; }
+  .not-found p { color: var(--color-muted); max-width: 46ch; }
+  .not-found__actions { display: flex; flex-wrap: wrap; gap: var(--space-5); align-items: center; }
+</style>
+<script>
+  import "../scripts/site.ts";
+</script>

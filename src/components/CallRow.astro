@@ -1,0 +1,14 @@
+---
+// The same closing line of every block (ux §10.7): a hairline, a short reason and the call.
+import PhoneIcon from "./PhoneIcon.astro";
+import { PHONE_MAIN } from "../data/clinic";
+interface Props { text: string; }
+const { text } = Astro.props;
+---
+<div class="call-row">
+  <p class="call-row__text">{text}</p>
+  <a class="call-row__link" href={PHONE_MAIN.href}>
+    <PhoneIcon size={22} />
+    <span>Зателефонувати</span>
+  </a>
+</div>
